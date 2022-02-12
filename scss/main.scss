@@ -1,0 +1,88 @@
+@import "variables";
+@import "utilities";
+
+:root {
+  font-family: Arial, sans-serif;
+  color: black;
+  font-size: 14px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: $lightest-gray;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header.header {
+  height: 10vh;
+  display: flex;
+  align-items: center;
+}
+
+section.main {
+  height: 85vh;
+}
+
+footer.footer {
+  height: 5vh;
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.paddle {
+  display: grid;
+  grid-template-columns: repeat(18, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  place-items: center;
+  background-color: $light-gray;
+  width: $paddle-width;
+  height: $paddle-height;
+  margin: 1rem;
+
+  .paddle-item {
+    width: 30px;
+    height: 30px;
+  }
+
+  .paddle-item.position {
+    border-radius: 50%;
+    background: white;
+  }
+}
+
+.deck {
+  display: flex;
+  flex-direction: row;
+}
+
+.draw-pile,
+.discard-pile {
+  width: 75px;
+  height: 105px;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-right: 1rem;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  .card {
+    width: 75px;
+  }
+}

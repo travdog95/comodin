@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jokers and Marbles</title>
+    <link rel="stylesheet" href="./css/main.css" />
+    <script src="./js/main.js" type="module"></script>
+  </head>
+  <body>
+    <header class="header">
+      <div class="title">Jokers & Marbles</div>
+    </header>
+    <section class="main">
+      <div data-game-board></div>
+      <div class="deck-container" data-deck-container="1">
+        <div class="player-name">Travis</div>
+        <div class="deck" data-player-deck="1">
+          <div class="draw-pile" data-draw-pile></div>
+          <div class="discard-pile" data-discard-pile><img class="card" src="" alt="" /></div>
+        </div>
+      </div>
+      <div class="deck-container" data-deck-container="2">
+        <div class="player-name">Kimmo</div>
+        <div class="deck" data-player-deck="2">
+          <div class="draw-pile" data-draw-pile></div>
+          <div class="discard-pile" data-discard-pile><img class="card" src="" alt="" /></div>
+        </div>
+      </div>
+      <template data-paddle-template>
+        <div class="paddle" data-player-paddle-id>
+          <div class="paddle-item spacer-9"></div>
+          <div class="paddle-item position" data-start></div>
+          <div class="paddle-item spacer-2"></div>
+          <div class="paddle-item position" data-home="first"></div>
+          <div class="paddle-item spacer-5"></div>
+
+          <div class="paddle-item spacer-8"></div>
+          <div class="paddle-item position" data-start></div>
+          <div class="paddle-item position" data-start></div>
+          <div class="paddle-item position" data-start></div>
+          <div class="paddle-item spacer-1"></div>
+          <div class="paddle-item position" data-home="second"></div>
+          <div class="paddle-item position" data-home="third"></div>
+          <div class="paddle-item position" data-home="fourth"></div>
+          <div class="paddle-item spacer-3"></div>
+
+          <div class="paddle-item spacer-9"></div>
+          <div class="paddle-item position" data-start></div>
+          <div class="paddle-item spacer-4"></div>
+          <div class="paddle-item position" data-home="fifth"></div>
+          <div class="paddle-item spacer-3"></div>
+
+          <div class="paddle-item position" data-track-postion></div>
+          <div class="paddle-item position" data-track-postion></div>
+          <div class="paddle-item position" data-track-postion></div>
+          <div class="paddle-item position" data-track-postion></div>
+          <div class="paddle-item position" data-track-postion></div>
+          <div class="paddle-item position" data-track-postion></div>
+          <div class="paddle-item position" data-track-postion></div>
+          <div class="paddle-item position" data-track-postion></div>
+          <div class="paddle-item position" data-track-postion></div>
+          <div class="paddle-item position" data-track-postion data-exit></div>
+          <div class="paddle-item position" data-track-postion></div>
+          <div class="paddle-item position" data-track-postion></div>
+          <div class="paddle-item position" data-track-postion></div>
+          <div class="paddle-item position" data-track-postion></div>
+          <div class="paddle-item position" data-track-postion data-door></div>
+          <div class="paddle-item position" data-track-postion></div>
+          <div class="paddle-item position" data-track-postion></div>
+          <div class="paddle-item position" data-track-postion></div>
+        </div>
+      </template>
+    </section>
+    <footer class="footer">Copyright TKO Consulting, LLC 2022</footer>
+  </body>
+</html>
