@@ -72,8 +72,8 @@ footer.footer {
 
 .draw-pile,
 .discard-pile {
-  width: 75px;
-  height: 105px;
+  width: $card-width;
+  height: $card-height;
   border: 1px solid black;
   border-radius: 5px;
   margin-right: 1rem;
@@ -81,8 +81,24 @@ footer.footer {
   &:hover {
     cursor: pointer;
   }
+}
 
-  .card {
-    width: 75px;
+.card {
+  width: $card-width;
+  display: block;
+}
+
+.hand {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.hand .card {
+  transition: margin 500ms;
+
+  &:hover {
+    cursor: pointer;
+    margin: -1rem 0 1rem 0;
   }
 }

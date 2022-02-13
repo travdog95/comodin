@@ -137,8 +137,8 @@ footer.footer {
 
 .draw-pile,
 .discard-pile {
-  width: 75px;
-  height: 105px;
+  width: 100px;
+  height: 139px;
   border: 1px solid black;
   border-radius: 5px;
   margin-right: 1rem;
@@ -149,7 +149,28 @@ footer.footer {
   cursor: pointer;
 }
 
-.draw-pile .card,
-.discard-pile .card {
-  width: 75px;
+.card {
+  width: 100px;
+  display: block;
+}
+
+.hand {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  gap: 0.5rem;
+}
+
+.hand .card {
+  -webkit-transition: margin 500ms;
+  transition: margin 500ms;
+}
+
+.hand .card:hover {
+  cursor: pointer;
+  margin: -1rem 0 1rem 0;
 }

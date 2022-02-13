@@ -1,7 +1,6 @@
 export default class Game {
   constructor(players) {
-    this.id = null;
-    this.data = {};
+    this.id = this.newId;
     this.players = players;
   }
 
@@ -10,7 +9,7 @@ export default class Game {
   }
 
   get numPlayers() {
-    return this.players.length;
+    return this.playerNames.length;
   }
 
   get paddleTemplate() {
@@ -25,9 +24,7 @@ export default class Game {
     return document.querySelector("[data-deck-container]");
   }
 
-  startNewGame() {
-    this.id = this.newId;
-
+  async startNewGame() {
     //Display paddles
     this.players.forEach((player, playerIndex) => {
       //Create paddle
@@ -50,6 +47,7 @@ export default class Game {
       }
 
       //Load decks
+      player.dealHand(5);
     });
   }
 }

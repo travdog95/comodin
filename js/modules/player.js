@@ -1,27 +1,51 @@
-import Constants from "../constants.js";
-
 export default class Player {
   constructor(id, screenName, color, deck) {
     this.id = id;
     this.screenName = screenName;
     this.color = color;
     this.deck = deck;
+    this.hand = [];
 
     this.init();
   }
 
-  init() {
-    const deckElement = document.querySelector(`[data-player-deck="${this.id}"]`);
-    const drawPileElement = deckElement.querySelector("[data-draw-pile]");
-    const discardPileElement = deckElement.querySelector("[data-discard-pile]");
-    const discardImageElement = discardPileElement.querySelector("img");
+  get deckElement() {
+    return document.querySelector(`[data-player-deck="${this.id}"]`);
+  }
 
-    drawPileElement.addEventListener("click", (e) => {
-      const result = this.deck.drawCard();
+  get drawPileElement() {
+    return this.deckElement.querySelector("[data-draw-pile]");
+  }
 
-      result.then((card) => {
-        discardImageElement.src = card.image;
-      });
+  get discardPileElement() {
+    return this.deckElement.querySelector("[data-discard-pile]");
+  }
+
+  get handElement() {
+    return this.deckElement.querySelector("[data-hand]");
+  }
+
+  async init() {
+    this.drawPileElement.addEventListener("click", async (e) => {
+      const cards = await this.deck.drawCards(1);
     });
+  }
+
+  async dealHand(numCards) {
+    const cards = await this.deck.drawCards(numCards);
+
+    cards.forEach((card) => {
+      this.addCardToHand(card);
+    });
+  }
+
+  addCardToHand(card) {
+    if (this.hand.length < 5) {
+      const img = document.createElement("img");
+      img.src = card.image;
+      img.classList.add("card");
+      this.handElement.appendChild(img);
+    } else {
+    }
   }
 }
