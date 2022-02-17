@@ -2,6 +2,7 @@ export default class Game {
   constructor(players) {
     this.id = this.newId;
     this.players = players;
+    this.test = "";
   }
 
   get newId() {
