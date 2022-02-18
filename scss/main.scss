@@ -55,8 +55,8 @@ footer.footer {
   margin: 1rem;
 
   .paddle-item {
-    width: 30px;
-    height: 30px;
+    width: 2rem;
+    height: 2rem;
   }
 
   .paddle-item.position {
@@ -74,7 +74,7 @@ footer.footer {
 .discard-pile {
   width: $card-width;
   height: $card-height;
-  border-radius: 5px;
+  border-radius: 0.25rem;
   margin-right: 1rem;
 }
 

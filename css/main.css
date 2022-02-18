@@ -110,14 +110,14 @@ footer.footer {
       grid-template-rows: repeat(4, 1fr);
   place-items: center;
   background-color: #c2c2c2;
-  width: 810px;
-  height: 180px;
+  width: 45rem;
+  height: 10rem;
   margin: 1rem;
 }
 
 .paddle .paddle-item {
-  width: 30px;
-  height: 30px;
+  width: 2rem;
+  height: 2rem;
 }
 
 .paddle .paddle-item.position {
@@ -137,9 +137,9 @@ footer.footer {
 
 .draw-pile,
 .discard-pile {
-  width: 100px;
-  height: 139px;
-  border-radius: 5px;
+  width: 6rem;
+  height: 8.34rem;
+  border-radius: 0.25rem;
   margin-right: 1rem;
 }
 
@@ -165,7 +165,7 @@ footer.footer {
 }
 
 .card {
-  width: 100px;
+  width: 6rem;
   display: block;
 }
 
