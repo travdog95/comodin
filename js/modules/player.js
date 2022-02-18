@@ -1,10 +1,13 @@
+import UI from "./UI.js";
+
 export default class Player {
-  constructor(id, screenName, color, deck) {
+  constructor(id, screenName, color, deck, settings) {
     this.id = id;
     this.screenName = screenName;
     this.color = color;
     this.deck = deck;
     this.hand = [];
+    this.settings = settings;
 
     this.init();
   }
@@ -27,7 +30,14 @@ export default class Player {
 
   async init() {
     this.drawPileElement.addEventListener("click", async (e) => {
-      const cards = await this.deck.drawCards(1);
+      if (this.hand.length < this.settings.maxCardsInHand) {
+        const cards = await this.deck.drawCards(1);
+        const card = cards[0];
+        this.hand.push(card);
+        UI.drawCard(card, this);
+      } else {
+        UI.displayMessage("Hand is full!");
+      }
     });
   }
 
@@ -35,17 +45,21 @@ export default class Player {
     const cards = await this.deck.drawCards(numCards);
 
     cards.forEach((card) => {
-      this.addCardToHand(card);
+      UI.drawCard(card, this);
+      this.hand.push(card);
     });
   }
 
-  addCardToHand(card) {
-    if (this.hand.length < 5) {
-      const img = document.createElement("img");
-      img.src = card.image;
-      img.classList.add("card");
-      this.handElement.appendChild(img);
-    } else {
-    }
+  removeCardFromHand(card) {
+    let newHand = [];
+    this.hand.forEach((cardInHand) => {
+      if (card.code === cardInHand.code) {
+        UI.removeCardFromHand(card, this);
+      } else {
+        newHand.push(cardInHand);
+      }
+    });
+
+    this.hand = newHand;
   }
 }

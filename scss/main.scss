@@ -74,13 +74,26 @@ footer.footer {
 .discard-pile {
   width: $card-width;
   height: $card-height;
-  border: 1px solid black;
   border-radius: 5px;
   margin-right: 1rem;
+}
 
+.draw-pile {
+  img {
+    width: 100%;
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
   &:hover {
     cursor: pointer;
   }
+}
+
+.discard-pile {
+  background-color: darken($lightest-gray, 5%);
 }
 
 .card {
@@ -101,4 +114,12 @@ footer.footer {
     cursor: pointer;
     margin: -1rem 0 1rem 0;
   }
+}
+
+.message {
+  width: 100%;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

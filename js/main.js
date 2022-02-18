@@ -1,23 +1,27 @@
 import Game from "./modules/game.js";
 import Player from "./modules/player.js";
 import Deck from "./modules/deck.js";
+import UI from "./modules/UI.js";
 import constants from "./constants.js";
 
-const playerNames = ["Travis", "Kimmo"];
+const settings = {
+  playerNames: ["Travis", "Kimmo"],
+  maxCardsInHand: 5,
+};
 
 const init = async () => {
-  const promises = playerNames.map(async (playerName, index) => {
+  const promises = settings.playerNames.map(async (playerName, index) => {
     //Create deck
     const deck_id = await newDeck(1);
 
     const deck = new Deck(1, deck_id);
 
-    return new Player(index + 1, playerName, constants.MARBLE_COLORS[index], deck);
+    return new Player(index + 1, playerName, constants.MARBLE_COLORS[index], deck, settings);
   });
 
   const players = await Promise.all(promises);
 
-  const game = new Game(players);
+  const game = new Game(players, settings);
 
   await game.startNewGame();
 
@@ -36,3 +40,13 @@ const newDeck = async (numberOfDecks) => {
 };
 
 init();
+
+//Create game
+
+//Deal cards to each player
+
+//Play card
+
+//Select and Move marble
+
+//Draw card
