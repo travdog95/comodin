@@ -17,7 +17,10 @@
       <div class="message" data-message></div>
 
       <div class="deck-container" data-deck-container="1">
-        <div class="player-name">Travis</div>
+        <div class="player-info">
+          <div class="player-name">Travis</div>
+          <div class="player-icon" data-player-icon></div>
+        </div>
         <div class="deck" data-player-deck="1">
           <div class="draw-pile" data-draw-pile><img src="./img/back.png" alt="Draw Pile" /></div>
           <div class="discard-pile" data-discard-pile></div>
@@ -25,7 +28,10 @@
         </div>
       </div>
       <div class="deck-container" data-deck-container="2">
-        <div class="player-name">Kimmo</div>
+        <div class="player-info">
+          <div class="player-name">Kimmo</div>
+          <div class="player-icon" data-player-icon></div>
+        </div>
         <div class="deck" data-player-deck="2">
           <div class="draw-pile" data-draw-pile><img src="./img/back.png" alt="Draw Pile" /></div>
           <div class="discard-pile" data-discard-pile></div>
@@ -33,47 +39,47 @@
         </div>
       </div>
       <template data-paddle-template>
-        <div class="paddle" data-player-paddle-id>
+        <div class="paddle" data-paddle>
           <div class="paddle-item spacer-9"></div>
-          <div class="paddle-item position" data-start></div>
+          <div class="paddle-item position" data-start="1" data-position="start-1">1</div>
           <div class="paddle-item spacer-2"></div>
-          <div class="paddle-item position" data-home="first"></div>
+          <div class="paddle-item position" data-home="1" data-position="home-1">1</div>
           <div class="paddle-item spacer-5"></div>
 
           <div class="paddle-item spacer-8"></div>
-          <div class="paddle-item position" data-start></div>
-          <div class="paddle-item position" data-start></div>
-          <div class="paddle-item position" data-start></div>
+          <div class="paddle-item position" data-start="2" data-position="start-2">2</div>
+          <div class="paddle-item position" data-start="3" data-position="start-3">3</div>
+          <div class="paddle-item position" data-start="4" data-position="start-4">4</div>
           <div class="paddle-item spacer-1"></div>
-          <div class="paddle-item position" data-home="second"></div>
-          <div class="paddle-item position" data-home="third"></div>
-          <div class="paddle-item position" data-home="fourth"></div>
+          <div class="paddle-item position" data-home="2" data-position="home-2">2</div>
+          <div class="paddle-item position" data-home="3" data-position="home-3">3</div>
+          <div class="paddle-item position" data-home="4" data-position="home-4">4</div>
           <div class="paddle-item spacer-3"></div>
 
           <div class="paddle-item spacer-9"></div>
-          <div class="paddle-item position" data-start></div>
+          <div class="paddle-item position" data-start="5" data-position="start-5">5</div>
           <div class="paddle-item spacer-4"></div>
-          <div class="paddle-item position" data-home="fifth"></div>
+          <div class="paddle-item position" data-home="5" data-position="home-5">5</div>
           <div class="paddle-item spacer-3"></div>
 
-          <div class="paddle-item position" data-track-postion></div>
-          <div class="paddle-item position" data-track-postion></div>
-          <div class="paddle-item position" data-track-postion></div>
-          <div class="paddle-item position" data-track-postion></div>
-          <div class="paddle-item position" data-track-postion></div>
-          <div class="paddle-item position" data-track-postion></div>
-          <div class="paddle-item position" data-track-postion></div>
-          <div class="paddle-item position" data-track-postion></div>
-          <div class="paddle-item position" data-track-postion></div>
-          <div class="paddle-item position" data-track-postion data-exit></div>
-          <div class="paddle-item position" data-track-postion></div>
-          <div class="paddle-item position" data-track-postion></div>
-          <div class="paddle-item position" data-track-postion></div>
-          <div class="paddle-item position" data-track-postion></div>
-          <div class="paddle-item position" data-track-postion data-door></div>
-          <div class="paddle-item position" data-track-postion></div>
-          <div class="paddle-item position" data-track-postion></div>
-          <div class="paddle-item position" data-track-postion></div>
+          <div class="paddle-item position" data-track data-position="18">18</div>
+          <div class="paddle-item position" data-track data-position="17">17</div>
+          <div class="paddle-item position" data-track data-position="16">16</div>
+          <div class="paddle-item position" data-track data-position="15">15</div>
+          <div class="paddle-item position" data-track data-position="14">14</div>
+          <div class="paddle-item position" data-track data-position="13">13</div>
+          <div class="paddle-item position" data-track data-position="12">12</div>
+          <div class="paddle-item position" data-track data-position="11">11</div>
+          <div class="paddle-item position" data-track data-position="10">10</div>
+          <div class="paddle-item position" data-track data-position="9" data-exit>9</div>
+          <div class="paddle-item position" data-track data-position="8">8</div>
+          <div class="paddle-item position" data-track data-position="7">7</div>
+          <div class="paddle-item position" data-track data-position="6">6</div>
+          <div class="paddle-item position" data-track data-position="5">5</div>
+          <div class="paddle-item position" data-track data-position="4" data-door>4</div>
+          <div class="paddle-item position" data-track data-position="3">3</div>
+          <div class="paddle-item position" data-track data-position="2">2</div>
+          <div class="paddle-item position" data-track data-position="1">1</div>
         </div>
       </template>
     </section>

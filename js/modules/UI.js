@@ -8,16 +8,14 @@ export default class UI {
     this.messageElement.innerHTML = message;
   }
 
-  static drawCard(card, player) {
+  static drawCard(card, player, message) {
     const img = document.createElement("img");
     img.src = card.image;
     img.classList.add("card");
     img.dataset.code = card.code;
-    img.addEventListener("click", (e) => {
-      this.discardCard(card, player);
-      player.removeCardFromHand(card);
-    });
+    player.bindCardEvents(card, img);
     player.handElement.appendChild(img);
+    if (message) this.displayMessage(message);
   }
 
   static discardCard(card, player) {
@@ -26,6 +24,7 @@ export default class UI {
     img.src = card.image;
     img.classList.add("card");
     player.discardPileElement.appendChild(img);
+    this.displayMessage(`${player.screenName} discarded the ${card.value} of ${card.suit}.`);
   }
 
   static removeCardFromHand(card, player) {
@@ -33,9 +32,37 @@ export default class UI {
     player.handElement.removeChild(cardElement);
   }
 
+  static highlightMoveableMarbles(moveableMarbles) {
+    moveableMarbles.forEach((moveableMarble) => {
+      moveableMarble.classList.add("moveable");
+    });
+  }
+
+  static unHighlightMoveableMarbles() {
+    const moveables = document.querySelectorAll(".paddle-item.moveable");
+    moveables.forEach((moveable) => moveable.classList.remove("moveable"));
+  }
+
   static selectMarble(marble, card) {}
 
-  static moveMarble(marble) {}
+  static moveMarble(fromElement, toElement, player) {
+    // console.log("from", fromElement);
+    const marbleNum = fromElement.dataset.marble;
+
+    //remove data player and data marble
+    delete fromElement.dataset.player;
+    delete fromElement.dataset.marble;
+
+    //set backgroundColor to white
+    fromElement.classList.remove(player.color);
+
+    // console.log("to", toElement);
+    //Add data-player and data-marble
+    toElement.dataset.player = player.id;
+    toElement.dataset.marble = marbleNum;
+    //Add class for color
+    toElement.classList.add(player.color);
+  }
 
   static sendMarbleToStart(marble) {}
 

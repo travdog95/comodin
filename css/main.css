@@ -40,6 +40,46 @@
           transform: rotate(180deg);
 }
 
+.green {
+  color: green;
+  background-color: green !important;
+}
+
+.yellow {
+  color: yellow;
+  background-color: yellow !important;
+}
+
+.red {
+  color: red;
+  background-color: red !important;
+}
+
+.black {
+  color: green;
+  background-color: green !important;
+}
+
+.white {
+  color: white;
+  background-color: white !important;
+}
+
+.lightblue {
+  color: lightblue;
+  background-color: lightblue !important;
+}
+
+.orange {
+  color: orange;
+  background-color: orange !important;
+}
+
+.blue {
+  color: blue;
+  background-color: blue !important;
+}
+
 :root {
   font-family: Arial, sans-serif;
   color: black;
@@ -118,11 +158,51 @@ footer.footer {
 .paddle .paddle-item {
   width: 2rem;
   height: 2rem;
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
+}
+
+.paddle .paddle-item.moveable {
+  border: 1px solid red;
+}
+
+.paddle .paddle-item.clickable {
+  border: 1px solid pink;
+  cursor: pointer;
 }
 
 .paddle .paddle-item.position {
   border-radius: 50%;
   background: white;
+}
+
+.player-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 1rem;
+}
+
+.player-name {
+  padding: 0.5rem 0;
+  font-size: 1.5rem;
+}
+
+.player-icon {
+  background-color: #c2c2c2;
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  -webkit-box-shadow: 0px 10px 13px -7px #000000;
+          box-shadow: 0px 10px 13px -7px #000000;
 }
 
 .deck {

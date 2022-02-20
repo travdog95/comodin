@@ -40,13 +40,3 @@ const newDeck = async (numberOfDecks) => {
 };
 
 init();
-
-//Create game
-
-//Deal cards to each player
-
-//Play card
-
-//Select and Move marble
-
-//Draw card

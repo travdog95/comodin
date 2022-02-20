@@ -57,12 +57,43 @@ footer.footer {
   .paddle-item {
     width: 2rem;
     height: 2rem;
+    display: grid;
+    place-items: center;
+  }
+
+  .paddle-item.moveable {
+    border: 1px solid red;
+  }
+
+  .paddle-item.clickable {
+    border: 1px solid pink;
+    cursor: pointer;
   }
 
   .paddle-item.position {
     border-radius: 50%;
     background: white;
   }
+}
+
+.player-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+.player-name {
+  padding: 0.5rem 0;
+  font-size: 1.5rem;
+}
+
+.player-icon {
+  background-color: $light-gray;
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  box-shadow: 0px 10px 13px -7px #000000;
 }
 
 .deck {
