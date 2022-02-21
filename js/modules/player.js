@@ -1,5 +1,6 @@
 import constants from "../constants.js";
 import UI from "./UI.js";
+import utils from "./_utilities.js";
 
 export default class Player {
   constructor(id, screenName, color, deck, settings) {
@@ -18,6 +19,8 @@ export default class Player {
     this.handElement = "";
     this.discardPileElement = "";
     this.drawPileElement = "";
+    this.exitPosition = "";
+    this.doorPosition = "";
   }
 
   get marbleElements() {
@@ -62,7 +65,7 @@ export default class Player {
     let movableMarbles = [];
     this.marbleElements.forEach((marbleElement) => {
       //Marbles in start
-      if (marbleElement.dataset.start) {
+      if (marbleElement.dataset.start && this.exitPosition.dataset.player != this.id) {
         if (constants.CARDS.EXIT_START.includes(card.value)) {
           movableMarbles.push(marbleElement);
         }
@@ -70,9 +73,11 @@ export default class Player {
 
       //Marbles on the track
       if (marbleElement.dataset.track) {
-        if (!constants.CARDS.MOVE_BACKWARD.includes(card.value)) {
-          movableMarbles.push(marbleElement);
-        }
+        // if (constants.CARDS.MOVE_BACKWARD.includes(card.value)) {
+        if (this.noMarblesInPath(marbleElement, card.value)) movableMarbles.push(marbleElement);
+        // } else {
+        //   if (this.noMarblesInPath(card.value)) movableMarbles.push(marbleElement);
+        // }
       }
     });
 
@@ -80,8 +85,15 @@ export default class Player {
   }
 
   moveMarble(card, marbleElement) {
-    let from = marbleElement;
-    let toPositionValue = "";
+    let fromElement = marbleElement;
+    let toElement;
+
+    const fromTrack = marbleElement.dataset.track;
+    const fromPosition = marbleElement.dataset.position;
+    const fromPositionValue = utils.getMarblePositionValue(fromPosition);
+    let toPosition = "";
+    let toPositionValue = 0;
+    let toTrack = "";
 
     const marbleNum = marbleElement.dataset.marble;
     //Move marble
@@ -89,12 +101,12 @@ export default class Player {
     if (marbleElement.dataset.start) {
       if (constants.CARDS.EXIT_START.includes(card.value)) {
         //Update marbles property
-        toPositionValue = `${this.id}-9`;
-        this.marbles[marbleNum] = toPositionValue;
+        toPosition = `${this.id}-9`;
+        this.marbles[marbleNum] = toPosition;
         //Update UI
         UI.moveMarble(
-          from,
-          this.paddleElement.querySelector(`[data-position="${toPositionValue}"]`),
+          fromElement,
+          this.paddleElement.querySelector(`[data-position="${toPosition}"]`),
           this
         );
 
@@ -102,19 +114,47 @@ export default class Player {
         this.endTurn();
         return;
       }
+    }
+    //If marble on track
 
-      if (!constants.CARDS.MOVE_BACKWARD.includes(card.value)) {
+    //Backwards card
+    if (constants.CARDS.MOVE_BACKWARD.includes(card.value)) {
+      toPositionValue = fromPositionValue - parseInt(constants.CARDS.VALUES[card.value]);
+      toTrack = parseInt(fromTrack);
+
+      if (toPositionValue < 1) {
+        toPositionValue = toPositionValue + constants.NUM_POSITIONS_PER_TRACK;
+        toTrack = toTrack === 1 ? this.settings.playerNames.length : toTrack - 1;
       }
 
-      //If marble on track
+      toPosition = `${toTrack}-${toPositionValue}`;
 
-      //If marble in home
+      toElement = document.querySelector(`[data-position="${toPosition}"]`);
+      UI.moveMarble(fromElement, toElement, this);
+      this.endTurn();
+      return;
+    } else {
+      //Determine where to move marbles
+      let toPositionValue = fromPositionValue + parseInt(constants.CARDS.VALUES[card.value]);
+      toTrack = parseInt(fromTrack);
+
+      if (toPositionValue > constants.NUM_POSITIONS_PER_TRACK) {
+        toPositionValue = toPositionValue - constants.NUM_POSITIONS_PER_TRACK;
+        toTrack = utils.getNextTrack(toTrack, this.settings.playerNames.length);
+      }
+
+      toPosition = `${toTrack}-${toPositionValue}`;
+
+      toElement = document.querySelector(`[data-position="${toPosition}"]`);
+      UI.moveMarble(fromElement, toElement, this);
+      this.endTurn();
+      return;
     }
+
+    //If marble in home
   }
 
   cardEventHandlers(card, img) {
-    // const moveableMarbles = this.findMovableMarbles(card);
-
     img.addEventListener("click", (e) => {
       if (Object.keys(this.discardedCard).length === 0) {
         UI.discardCard(card, this);
@@ -159,12 +199,15 @@ export default class Player {
       trackElement.dataset.track = this.id;
       trackElement.dataset.position = position;
     });
+
+    this.exitPosition = this.paddleElement.querySelector("[data-exit]");
+    this.doorPosition = this.paddleElement.querySelector("[data-door]");
   }
 
   removeMarbleClickability() {
     const clickableMarbles = document.querySelectorAll(".paddle-item.clickable");
     clickableMarbles.forEach((clickableMarble) => {
-      clickableMarble.removeEventListener("click", this.marbleHandler);
+      clickableMarble.removeEventListener("click", this.boundMarbleHandler);
       clickableMarble.classList.remove("clickable");
     });
   }
@@ -187,5 +230,42 @@ export default class Player {
     const card = cards[0];
     this.hand.push(card);
     UI.drawCard(card, this, `${this.screenName} drew a card.`);
+  }
+
+  noMarblesInPath(marble, cardValue) {
+    const track = parseInt(marble.dataset.track);
+    const position = marble.dataset.position;
+    const positionValue = utils.getMarblePositionValue(position);
+    const marbleId = marble.dataset.marble;
+
+    let p = 1;
+    let currentPosition = 0;
+    let currentTrack = "";
+    let currentPositionElement = "";
+
+    //Check behind
+    if (constants.CARDS.MOVE_BACKWARD.includes(cardValue)) {
+      return true;
+    } else {
+      for (p; p <= parseInt(cardValue); p++) {
+        if (positionValue + p > constants.NUM_POSITIONS_PER_TRACK) {
+          currentPosition = positionValue + p - constants.NUM_POSITIONS_PER_TRACK;
+          currentTrack = utils.getNextTrack(track);
+        } else {
+          currentPosition = positionValue + p;
+          currentTrack = track;
+        }
+        currentPositionElement = document.querySelector(
+          `[data-position="${currentTrack}-${currentPosition}"]`
+        );
+        // console.log("marbleId", marbleId);
+        // console.log("marbleplayer", currentPositionElement.dataset.player);
+        // console.log("currentTrack", currentTrack);
+        // console.log("player", this.id);
+
+        if (currentPositionElement.dataset.player == this.id) return false;
+      }
+      return true;
+    }
   }
 }

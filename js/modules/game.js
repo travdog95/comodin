@@ -6,6 +6,7 @@ export default class Game {
     this.players = players;
     this.settings = settings;
     this.turn = players[0].id;
+    this.turnOrder = [];
   }
 
   get newId() {
@@ -19,6 +20,9 @@ export default class Game {
   async startNewGame() {
     //Display paddles
     this.players.forEach((player, playerIndex) => {
+      //update turn order
+      this.turnOrder.push(player.id);
+
       //Create paddle
       player.paddleElement = UI.createPaddle(player);
 

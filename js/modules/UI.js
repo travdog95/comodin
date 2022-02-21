@@ -47,7 +47,7 @@ export default class UI {
   }
 
   static moveMarble(fromElement, toElement, player) {
-    // console.log("from", fromElement);
+    console.log("from", fromElement);
     const marbleNum = fromElement.dataset.marble;
 
     //remove data player and data marble
@@ -57,7 +57,7 @@ export default class UI {
     //set backgroundColor to white
     fromElement.classList.remove(player.color);
 
-    // console.log("to", toElement);
+    console.log("to", toElement);
     //Add data-player and data-marble
     toElement.dataset.player = player.id;
     toElement.dataset.marble = marbleNum;
