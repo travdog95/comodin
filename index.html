@@ -13,31 +13,10 @@
       <div class="title">Jokers & Marbles</div>
     </header>
     <section class="main">
-      <div data-game-board></div>
+      <div class="game-board" data-game-board></div>
       <div class="message" data-message></div>
-
-      <div class="deck-container" data-deck-container="1">
-        <div class="player-info">
-          <div class="player-name">Travis</div>
-          <div class="player-icon" data-player-icon></div>
-        </div>
-        <div class="deck" data-player-deck="1">
-          <div class="draw-pile" data-draw-pile><img src="./img/back.png" alt="Draw Pile" /></div>
-          <div class="discard-pile" data-discard-pile></div>
-          <div class="hand" data-hand></div>
-        </div>
-      </div>
-      <div class="deck-container" data-deck-container="2">
-        <div class="player-info">
-          <div class="player-name">Kimmo</div>
-          <div class="player-icon" data-player-icon></div>
-        </div>
-        <div class="deck" data-player-deck="2">
-          <div class="draw-pile" data-draw-pile><img src="./img/back.png" alt="Draw Pile" /></div>
-          <div class="discard-pile" data-discard-pile></div>
-          <div class="hand" data-hand></div>
-        </div>
-      </div>
+      <div class="card-table" data-card-table></div>
+      <div class="game-audit" data-game-audit></div>
       <template data-paddle-template>
         <div class="paddle" data-paddle>
           <div class="paddle-item spacer-9"></div>
@@ -82,7 +61,32 @@
           <div class="paddle-item position" data-track data-position="1">1</div>
         </div>
       </template>
+      <template data-deck-container-template>
+        <div class="deck-container" data-deck-container>
+          <div class="player-info">
+            <div class="player-name"></div>
+            <div class="player-icon" data-player-icon></div>
+          </div>
+          <div class="deck" data-player-deck>
+            <div class="draw-pile" data-draw-pile><img src="./img/back.png" alt="Draw Pile" /></div>
+            <div class="discard-pile" data-discard-pile></div>
+            <div class="hand" data-hand></div>
+          </div>
+        </div>
+      </template>
     </section>
+    <!-- <div class="deck-container" data-deck-container="1">
+      <div class="player-info">
+        <div class="player-name">Travis</div>
+        <div class="player-icon" data-player-icon></div>
+      </div>
+      <div class="deck" data-player-deck="1">
+        <div class="draw-pile" data-draw-pile><img src="./img/back.png" alt="Draw Pile" /></div>
+        <div class="discard-pile" data-discard-pile></div>
+        <div class="hand" data-hand></div>
+      </div>
+    </div> -->
+
     <footer class="footer">Copyright TKO Consulting, LLC 2022</footer>
   </body>
 </html>

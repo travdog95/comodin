@@ -1,7 +1,6 @@
 import Game from "./modules/game.js";
 import Player from "./modules/player.js";
 import Deck from "./modules/deck.js";
-import UI from "./modules/UI.js";
 import constants from "./constants.js";
 
 const settings = {

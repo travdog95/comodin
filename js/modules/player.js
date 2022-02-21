@@ -12,59 +12,29 @@ export default class Player {
     this.settings = settings;
     this.paddleElement = "";
     this.discardedCard = {};
-
-    this.init();
-  }
-
-  get deckContainer() {
-    return document.querySelector(`[data-deck-container="${this.id}"]`);
-  }
-
-  get deckElement() {
-    return document.querySelector(`[data-player-deck="${this.id}"]`);
-  }
-
-  get drawPileElement() {
-    return this.deckElement.querySelector("[data-draw-pile]");
-  }
-
-  get discardPileElement() {
-    return this.deckElement.querySelector("[data-discard-pile]");
-  }
-
-  get handElement() {
-    return this.deckElement.querySelector("[data-hand]");
+    this.deckElement = "";
+    this.deckContainer = "";
+    this.playerIconElement = "";
+    this.handElement = "";
+    this.discardPileElement = "";
+    this.drawPileElement = "";
   }
 
   get marbleElements() {
     return document.querySelectorAll(`[data-player="${this.id}"]`);
   }
 
-  get playerIconElement() {
-    return this.deckContainer.querySelector("[data-player-icon]");
-  }
-
-  // get marblePositionElements() {
-  //   let elements = [];
-  //   console.lo;
-
-  //   this.marbleElements.forEach((marbleElement) => {
-  //     elements.push(marbleElement.dataset.position);
-  //   });
-  //   return elements;
-  // }
-
   get playableCards() {}
 
-  async init() {
-    this.drawPileElement.addEventListener("click", async (e) => {
-      if (this.hand.length < this.settings.maxCardsInHand) {
-        await this.drawCard();
-      } else {
-        UI.displayMessage("Hand is full!");
-      }
-    });
-  }
+  // drawPileHandler() {
+  //   this.drawPileElement.addEventListener("click", async (e) => {
+  //     if (this.hand.length < this.settings.maxCardsInHand) {
+  //       await this.drawCard();
+  //     } else {
+  //       UI.displayMessage("Hand is full!");
+  //     }
+  //   });
+  // }
 
   async dealHand(numCards) {
     const cards = await this.deck.drawCards(numCards);
@@ -92,8 +62,15 @@ export default class Player {
     let movableMarbles = [];
     this.marbleElements.forEach((marbleElement) => {
       //Marbles in start
-      if (marbleElement.dataset.start !== undefined) {
+      if (marbleElement.dataset.start) {
         if (constants.CARDS.EXIT_START.includes(card.value)) {
+          movableMarbles.push(marbleElement);
+        }
+      }
+
+      //Marbles on the track
+      if (marbleElement.dataset.track) {
+        if (!constants.CARDS.MOVE_BACKWARD.includes(card.value)) {
           movableMarbles.push(marbleElement);
         }
       }
@@ -102,8 +79,41 @@ export default class Player {
     return movableMarbles;
   }
 
-  bindCardEvents(card, img) {
-    const moveableMarbles = this.findMovableMarbles(card);
+  moveMarble(card, marbleElement) {
+    let from = marbleElement;
+    let toPositionValue = "";
+
+    const marbleNum = marbleElement.dataset.marble;
+    //Move marble
+    //Move marble from start
+    if (marbleElement.dataset.start) {
+      if (constants.CARDS.EXIT_START.includes(card.value)) {
+        //Update marbles property
+        toPositionValue = `${this.id}-9`;
+        this.marbles[marbleNum] = toPositionValue;
+        //Update UI
+        UI.moveMarble(
+          from,
+          this.paddleElement.querySelector(`[data-position="${toPositionValue}"]`),
+          this
+        );
+
+        //End turn
+        this.endTurn();
+        return;
+      }
+
+      if (!constants.CARDS.MOVE_BACKWARD.includes(card.value)) {
+      }
+
+      //If marble on track
+
+      //If marble in home
+    }
+  }
+
+  cardEventHandlers(card, img) {
+    // const moveableMarbles = this.findMovableMarbles(card);
 
     img.addEventListener("click", (e) => {
       if (Object.keys(this.discardedCard).length === 0) {
@@ -112,7 +122,7 @@ export default class Player {
         this.discardedCard = card;
 
         //Make moveable marbles clickable
-        this.bindMarbleEvents(moveableMarbles);
+        this.marbleEventHandlers(this.findMovableMarbles(card));
       } else {
         UI.displayMessage("Finish your turn!");
       }
@@ -130,7 +140,7 @@ export default class Player {
 
   boundMarbleHandler = this.marbleHandler.bind(this);
 
-  bindMarbleEvents(moveableMarbles) {
+  marbleEventHandlers(moveableMarbles) {
     moveableMarbles.forEach((marbleElement) => {
       marbleElement.classList.add("clickable");
       marbleElement.addEventListener("click", this.boundMarbleHandler);
@@ -140,38 +150,6 @@ export default class Player {
   marbleHandler(e) {
     const marbleElement = e.target;
     this.moveMarble(this.discardedCard, marbleElement);
-  }
-
-  async moveMarble(card, marbleElement) {
-    if (card !== undefined && marbleElement !== undefined) {
-      let from = marbleElement;
-      let toPositionValue = "";
-
-      const marbleNum = marbleElement.dataset.marble;
-      //Move marble
-      if (marbleElement.querySelector("[data-start") !== undefined) {
-        if (constants.CARDS.EXIT_START.includes(card.value)) {
-          //Update marbles property
-          toPositionValue = `${this.id}-9`;
-          this.marbles[marbleNum] = toPositionValue;
-          //Update UI
-          UI.moveMarble(
-            from,
-            this.paddleElement.querySelector(`[data-position="${toPositionValue}"]`),
-            this
-          );
-
-          //Remove clickability from marble
-          this.removeMarbleClickability();
-
-          //Draw card
-          await this.drawCard();
-
-          //Determine who's next
-          this.endTurn();
-        }
-      }
-    }
   }
 
   updateTrackAttributes() {
@@ -191,8 +169,17 @@ export default class Player {
     });
   }
 
-  endTurn() {
+  async endTurn() {
+    //Remove clickability from marble
+    this.removeMarbleClickability();
+
+    //Draw card
+    await this.drawCard();
+
+    //Clear discarded card
     this.discardedCard = {};
+
+    //Find next player
   }
 
   async drawCard() {
